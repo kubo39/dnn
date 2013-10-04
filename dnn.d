@@ -173,6 +173,12 @@ class NeuralNetwork {
 	forward(inputs[idx_arr[j]]);
 	feedback(targets[idx_arr[j]]);
 
+	writeln(targets[idx_arr[j]]);
+	for (int k; k < outputLayer.length; ++k) {
+	  auto err = outputLayer[k] - targets[idx_arr[j]][k];
+	  cur_err += 0.5 * err * err;
+	}
+
 	if ((j+1)%1000 == 0) {
 	  if (iter_flag != i) {
 	    writeln("");
