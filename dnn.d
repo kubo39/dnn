@@ -45,7 +45,7 @@ int[] genRandomIdx(int n) {
   }
 
   for (int i; i < n; ++i) {
-    auto j = i + cast(int) uniform(0.0, 1.0);
+    auto j = i + uniform(0, n-i);
     auto tmp = arr[i];
     arr[i] = arr[j];
     arr[j] = tmp;
