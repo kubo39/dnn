@@ -70,7 +70,7 @@ class NeuralNetwork {
   double rate2;
 
   this(int iInputCount, int iHiddenCount, int iOutputCount, bool iRegression,
-       double iRate1 = 0.25, double iRate2 = 0.1) {
+       double iRate1 = 0.25, double iRate2 = 0.1) { // Rateはランダムに与える重み
     iInputCount += 1;
     iHiddenCount += 1;
 
@@ -97,6 +97,7 @@ class NeuralNetwork {
     }
     inputLayer[inputLayer.length-1] = 1.0;
 
+    // 隠れ層の計算
     for (int i; i < hiddenLayer.length-1; ++i) {
       double sum = 0.0;
       for (int j; j < inputLayer.length; ++j) {
@@ -106,6 +107,7 @@ class NeuralNetwork {
     }
     hiddenLayer[hiddenLayer.length-1] = 1.0;
 
+    // 出力層の計算
     for (int i; i < outputLayer.length; ++i) {
       double sum = 0.0;
       for (int j; j < hiddenLayer.length; ++j) {
@@ -137,6 +139,7 @@ class NeuralNetwork {
       errHidden[i] = err;
     }
 
+    // 出力層の重み更新
     for (int i; i < outputLayer.length; ++i) {
       for (int j; j < hiddenLayer.length; ++j) {
 	double change = 0.0;
@@ -152,6 +155,7 @@ class NeuralNetwork {
       }
     }
 
+    // 隠れ層の重み計算
     for (int i; i < hiddenLayer.length-1; ++i) {
       for (int j; j < inputLayer.length; ++j) {
 	auto delta = errHidden[i] * dsigmoid(hiddenLayer[i]);
@@ -173,6 +177,7 @@ class NeuralNetwork {
 	forward(inputs[idx_arr[j]]);
 	feedback(targets[idx_arr[j]]);
 
+	// 二乗誤差の計算
 	for (int k; k < outputLayer.length; ++k) {
 	  auto err = outputLayer[k] - targets[idx_arr[j]][k];
 	  cur_err += 0.5 * err * err;
@@ -197,7 +202,7 @@ class NeuralNetwork {
 
 
 void main() {
-  auto nn = new NeuralNetwork(2, 3, 1, true);
+  auto nn = new NeuralNetwork(2, 3, 1, true); // 入力層の数, 隠れ層の数, 出力層の数, 回帰
   double[][] inputs = [[0.0, 0.0], [0.0, 1.0], [1.0, 0.0], [1.0, 1.0]];
   double[][] targets = [[0.0], [1.0], [1.0], [2.0]];
 
