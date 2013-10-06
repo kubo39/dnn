@@ -1,6 +1,6 @@
 module dnn;
 
-import std.stdio, std.math, std.random;
+import std.stdio, std.math, std.random, std.algorithm;
 
 
 double sigmoid(double x) {
@@ -48,9 +48,7 @@ int[] genRandomIdx(int n) {
 
   for (int i; i < n; ++i) {
     auto j = i + uniform(0, n-i);
-    auto tmp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = tmp;
+    swap(arr[i], arr[j]);
   }
   return arr;
 }
