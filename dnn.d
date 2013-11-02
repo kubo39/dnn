@@ -101,7 +101,7 @@ class NeuralNetwork {
     for (int i; i < hiddenLayer.length-1; ++i) {
       double sum = 0.0;
       for (int j; j < inputLayer.length; ++j) {
-	sum += inputLayer[j] * weightHidden[i][j];
+        sum += inputLayer[j] * weightHidden[i][j];
       }
       hiddenLayer[i] = sigmoid(sum);
     }
@@ -111,12 +111,12 @@ class NeuralNetwork {
     for (int i; i < outputLayer.length; ++i) {
       double sum = 0.0;
       for (int j; j < hiddenLayer.length; ++j) {
-	sum += hiddenLayer[j] * weightOutput[i][j];
+        sum += hiddenLayer[j] * weightOutput[i][j];
       }
       if (regression) {
-	outputLayer[i] = sum;
+        outputLayer[i] = sum;
       } else {
-	outputLayer[i] = sigmoid(sum);
+        outputLayer[i] = sigmoid(sum);
       }
     }
     return outputLayer;
@@ -130,11 +130,11 @@ class NeuralNetwork {
     for (int i; i < hiddenLayer.length-1; ++i) {
       double err = 0.0;
       for (int j; j < outputLayer.length; ++j) {
-	if (regression) {
-	  err += errOutput[j] * weightOutput[j][i];
-	} else {
-	  err += errOutput[j] * weightOutput[j][i] * dsigmoid(outputLayer[j]);
-	}
+        if (regression) {
+          err += errOutput[j] * weightOutput[j][i];
+        } else {
+          err += errOutput[j] * weightOutput[j][i] * dsigmoid(outputLayer[j]);
+        }
       }
       errHidden[i] = err;
     }
@@ -142,26 +142,26 @@ class NeuralNetwork {
     // 出力層の重み更新
     for (int i; i < outputLayer.length; ++i) {
       for (int j; j < hiddenLayer.length; ++j) {
-	double change = 0.0;
-	double delta = 0.0;
-	if (regression) {
-	  delta = errOutput[i];
-	} else {
-	  delta = errOutput[i] * dsigmoid(outputLayer[i]);
-	}
-	change = rate1 * delta * hiddenLayer[i] + rate2 * lastChangeOutput[i][j];
-	weightOutput[i][j] -= change;
-	lastChangeOutput[i][j] = change;
+        double change = 0.0;
+        double delta = 0.0;
+        if (regression) {
+          delta = errOutput[i];
+        } else {
+          delta = errOutput[i] * dsigmoid(outputLayer[i]);
+        }
+        change = rate1 * delta * hiddenLayer[i] + rate2 * lastChangeOutput[i][j];
+        weightOutput[i][j] -= change;
+        lastChangeOutput[i][j] = change;
       }
     }
 
     // 隠れ層の重み計算
     for (int i; i < hiddenLayer.length-1; ++i) {
       for (int j; j < inputLayer.length; ++j) {
-	auto delta = errHidden[i] * dsigmoid(hiddenLayer[i]);
-	auto change = rate1 * delta * inputLayer[j] + rate2 * lastChangeHidden[i][j];
-	weightHidden[i][j] -= change;
-	lastChangeHidden[i][j] = change;
+        auto delta = errHidden[i] * dsigmoid(hiddenLayer[i]);
+        auto change = rate1 * delta * inputLayer[j] + rate2 * lastChangeHidden[i][j];
+        weightHidden[i][j] -= change;
+        lastChangeHidden[i][j] = change;
       }
     }
   }
@@ -173,26 +173,26 @@ class NeuralNetwork {
       
       float cur_err = 0.0;
       for (int j; j < inputs.length; ++j) {
-	auto idx_arr = genRandomIdx(inputs.length);
-	forward(inputs[idx_arr[j]]);
-	feedback(targets[idx_arr[j]]);
+        auto idx_arr = genRandomIdx(inputs.length);
+        forward(inputs[idx_arr[j]]);
+        feedback(targets[idx_arr[j]]);
 
-	// 二乗誤差の計算
-	for (int k; k < outputLayer.length; ++k) {
-	  auto err = outputLayer[k] - targets[idx_arr[j]][k];
-	  cur_err += 0.5 * err * err;
-	}
+        // 二乗誤差の計算
+        for (int k; k < outputLayer.length; ++k) {
+          auto err = outputLayer[k] - targets[idx_arr[j]][k];
+          cur_err += 0.5 * err * err;
+        }
 
-	if ((j+1)%1000 == 0) {
-	  if (iter_flag != i) {
-	    writeln("");
-	    iter_flag = i;
-	  }
-	  writefln("iteration %dth / progress %.2f", i+1, cast(double) j*100/cast(double) inputs.length);
-	}
+        if ((j+1)%1000 == 0) {
+          if (iter_flag != i) {
+            writeln("");
+            iter_flag = i;
+          }
+          writefln("iteration %dth / progress %.2f", i+1, cast(double) j*100/cast(double) inputs.length);
+        }
       }
       if ((iteration >= 10 && (i+1)%(iteration/10) == 0) || iteration < 10) {
-	writefln("\niteration %dth MSE: %.5f", i+1, cur_err / cast(double) inputs.length);
+        writefln("\niteration %dth MSE: %.5f", i+1, cur_err / cast(double) inputs.length);
       }
     }
     writeln("done.");
