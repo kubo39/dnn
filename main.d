@@ -3,7 +3,7 @@ import dnn;
 
 void main()
 {
-  auto nn = new NeuralNetwork(3, 4, 1); // 入力層の数, 隠れ層の数, 出力層の数
+  auto nn = new NeuralNetwork(2, 3, 1); // 入力層の数, 隠れ層の数, 出力層の数
   double[][] inputs = [[0.0, 0.0], [0.0, 1.0], [1.0, 0.0], [1.0, 1.0]];
   double[][] targets = [[0.0], [1.0], [1.0], [2.0]];
 
