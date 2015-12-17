@@ -140,7 +140,7 @@ class NeuralNetwork
           cur_err += 0.5 * err * err;
         }
 
-        if ((j+1)%1000 == 0) {
+        if ((j+1) % 1000 == 0) {
           if (iter_flag != i) {
             writeln("");
             iter_flag = i;
