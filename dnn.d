@@ -15,21 +15,18 @@ class NeuralNetwork
   double[] errHidden;
   double[][] lastChangeHidden;
   double[][] lastChangeOutput;
-  bool regression;
   double rate1;
   double rate2;
 
   this(int iInputCount,
        int iHiddenCount,
        int iOutputCount,
-       bool iRegression,
        double iRate1 = 0.25,
        double iRate2 = 0.1)  // Rateはランダムに与える重み
   {
     iInputCount += 1;
     iHiddenCount += 1;
 
-    regression = iRegression;
     rate1 = iRate1;
     rate2 = iRate2;
 
@@ -69,11 +66,7 @@ class NeuralNetwork
       for (int j; j < hiddenLayer.length; ++j) {
         sum += hiddenLayer[j] * weightOutput[i][j];
       }
-      if (regression) {
-        outputLayer[i] = sum;
-      } else {
-        outputLayer[i] = sigmoid(sum);
-      }
+      outputLayer[i] = sigmoid(sum);
     }
     return outputLayer;
   }
@@ -87,11 +80,7 @@ class NeuralNetwork
     for (int i; i < hiddenLayer.length-1; ++i) {
       double err = 0.0;
       for (int j; j < outputLayer.length; ++j) {
-        if (regression) {
-          err += errOutput[j] * weightOutput[j][i];
-        } else {
-          err += errOutput[j] * weightOutput[j][i] * dsigmoid(outputLayer[j]);
-        }
+        err += errOutput[j] * weightOutput[j][i] * dsigmoid(outputLayer[j]);
       }
       errHidden[i] = err;
     }
@@ -101,11 +90,7 @@ class NeuralNetwork
       for (int j; j < hiddenLayer.length; ++j) {
         double change = 0.0;
         double delta = 0.0;
-        if (regression) {
-          delta = errOutput[i];
-        } else {
-          delta = errOutput[i] * dsigmoid(outputLayer[i]);
-        }
+        delta = errOutput[i] * dsigmoid(outputLayer[i]);
         change = rate1 * delta * hiddenLayer[i] + rate2 * lastChangeOutput[i][j];
         weightOutput[i][j] -= change;
         lastChangeOutput[i][j] = change;
