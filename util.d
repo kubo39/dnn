@@ -39,7 +39,7 @@ double[][] randomMatrix(int rows, int colums, double lower, double upper) {
 }
 
 
-int[] genRandomIdx(int n) {
+int[] genRandomIdx(ulong n) {
   int[] arr;
   for (int i; i < n; ++i) {
     arr ~= i;
