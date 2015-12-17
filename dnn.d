@@ -4,8 +4,8 @@ import std.stdio;
 import util;
 
 
-class NeuralNetwork {
-
+class NeuralNetwork
+{
   double[] hiddenLayer;
   double[] inputLayer;
   double[] outputLayer;
@@ -19,8 +19,13 @@ class NeuralNetwork {
   double rate1;
   double rate2;
 
-  this(int iInputCount, int iHiddenCount, int iOutputCount, bool iRegression,
-       double iRate1 = 0.25, double iRate2 = 0.1) { // Rateはランダムに与える重み
+  this(int iInputCount,
+       int iHiddenCount,
+       int iOutputCount,
+       bool iRegression,
+       double iRate1 = 0.25,
+       double iRate2 = 0.1)  // Rateはランダムに与える重み
+  {
     iInputCount += 1;
     iHiddenCount += 1;
 
@@ -41,7 +46,8 @@ class NeuralNetwork {
     lastChangeOutput = makeMatrix(iOutputCount, iHiddenCount, 0.0);
   }
 
-  double[] forward(double[] input) {
+  double[] forward(double[] input)
+  {
     for (int i; i < input.length; ++i) {
       inputLayer[i] = input[i];
     }
@@ -72,7 +78,8 @@ class NeuralNetwork {
     return outputLayer;
   }
 
-  void feedback(double[] target) {
+  void feedback(double[] target)
+  {
     for (int i; i < outputLayer.length; ++i) {
       errOutput[i] = outputLayer[i] - target[i];
     }
@@ -116,7 +123,8 @@ class NeuralNetwork {
     }
   }
 
-  void train(double[][] inputs, double[][] targets, int iteration) {
+  void train(double[][] inputs, double[][] targets, int iteration)
+  {
     int iter_flag = -1;
 
     for (int i; i < iteration; ++i) {
@@ -146,5 +154,4 @@ class NeuralNetwork {
     }
     writeln("done.");
   }
-
 }
