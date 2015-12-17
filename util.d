@@ -22,6 +22,7 @@ double[][] makeMatrix(int rows, int colums, double value)
   double[][] mat;
   mat.length = rows;
   for (int i; i < rows; ++i) {
+    mat[i].reserve(colums);
     for (int j; j < colums; ++j) {
       mat[i] ~= value;
     }
@@ -35,6 +36,7 @@ double[][] randomMatrix(int rows, int colums, double lower, double upper)
   double[][] mat;
   mat.length = rows;
   for (int i; i < rows; ++i) {
+    mat[i].reserve(colums);
     for(int j; j < colums; ++j) {
       mat[i] ~= uniform(0.0, cast(double) (upper - lower)) + lower;
     }
@@ -46,6 +48,7 @@ double[][] randomMatrix(int rows, int colums, double lower, double upper)
 int[] genRandomIdx(ulong n)
 {
   int[] arr;
+  arr.reserve(n);
   for (int i; i < n; ++i) {
     arr ~= i;
   }
@@ -56,4 +59,3 @@ int[] genRandomIdx(ulong n)
   }
   return arr;
 }
-
