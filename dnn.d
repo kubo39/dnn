@@ -18,15 +18,17 @@ class NeuralNetwork
   double rate1;
   double rate2;
 
-  this(int iInputCount,
-       int iHiddenCount,
-       int iOutputCount,
+  this(uint iInputCount,
+       uint iHiddenCount,
+       uint iOutputCount,
        double iRate1 = 0.25,
        double iRate2 = 0.1)  // Rateはランダムに与える重み
-  {
-    iInputCount += 1;
-    iHiddenCount += 1;
-
+  in {
+    assert(iInputCount >= 1, "can't have any empty layers.");
+    assert(iHiddenCount >= 1, "can't have any empty layers.");
+    assert(iOutputCount >= 1, "can't have any empty layers.");
+  }
+  body {
     rate1 = iRate1;
     rate2 = iRate2;
 
