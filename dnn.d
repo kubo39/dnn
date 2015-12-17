@@ -125,18 +125,25 @@ class NeuralNetwork
           cur_err += 0.5 * err * err;
         }
 
-        if ((j+1) % 1000 == 0) {
-          if (iter_flag != i) {
-            writeln("");
-            iter_flag = i;
+        debug {
+          if ((j+1) % 1000 == 0) {
+            if (iter_flag != i) {
+              writeln("");
+              iter_flag = i;
+            }
+            writefln("iteration %dth / progress %.2f", i+1, cast(double) j*100/cast(double) inputs.length);
           }
-          writefln("iteration %dth / progress %.2f", i+1, cast(double) j*100/cast(double) inputs.length);
+        }
+
+      }
+
+      debug {
+        if ((iteration >= 10 && (i+1)%(iteration/10) == 0) || iteration < 10) {
+          writefln("\niteration %dth MSE: %.5f", i+1, cur_err / cast(double) inputs.length);
         }
       }
-      if ((iteration >= 10 && (i+1)%(iteration/10) == 0) || iteration < 10) {
-        writefln("\niteration %dth MSE: %.5f", i+1, cur_err / cast(double) inputs.length);
-      }
+
     }
-    writeln("done.");
+    debug writeln("done.");
   }
 }
